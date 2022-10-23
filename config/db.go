@@ -3,19 +3,32 @@ package config
 import (
 	"fmt"
 	"live-chat-gorilla/entity"
+	"log"
 	"net/http"
 	"strconv"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func SetupDatabaseConnection() *gorm.DB {
 
-	dbHost := "localhost"
-	dbPort := "3306"
-	dbName := "live_chat"
-	dbUser := "root"
+	envs, err := godotenv.Read(".env")
+
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
+	dbHost := envs["DB_HOST"]
+	dbPort := envs["DB_PORT"]
+	dbUser := envs["DB_USER"]
+	dbName := envs["DB_NAME"]
+	
+	// dbHost := "localhost"
+	// dbPort := "3306"
+	// dbName := "live_chat"
+	// dbUser := "root"
 
 	fmt.Println(dbHost)
 
