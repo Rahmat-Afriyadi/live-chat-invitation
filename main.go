@@ -17,6 +17,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/rs/cors"
 	"gorm.io/gorm"
+	"github.com/joho/godotenv"
 )
 
 type PresenceComment struct {
@@ -100,6 +101,12 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 func main() {
 	defer config.CloseDatabaseConnection(db)
 
+	envs, err := godotenv.Read(".env")
+
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
 	router := mux.NewRouter()
 
 	router.PathPrefix("/assets").Handler(http.FileServer(http.Dir("./assets/")))
@@ -115,8 +122,10 @@ func main() {
         AllowCredentials: true,
     })
 
+	port := envs["PORT"]
+
 	handler := c.Handler(router)
 
-	log.Fatal(http.ListenAndServe(":8080", handler))
+	log.Fatal(http.ListenAndServe( port , handler))
 
 }
