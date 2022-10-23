@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"live-chat-gorilla/config"
+	"live-chat-gorilla/helper"
 
 	"live-chat-gorilla/controller"
 	"live-chat-gorilla/entity"
@@ -101,6 +102,10 @@ func main() {
 
 	router := mux.NewRouter()
 
+	router.PathPrefix("/assets").Handler(http.FileServer(http.Dir("./assets/")))
+	router.HandleFunc("/", func (w http.ResponseWriter, r *http.Request)  {
+		helper.RespondWithJSON(w, http.StatusAccepted, "Hello World")
+	})
 	router.HandleFunc("/socket", WsEndpoint)
 	router.HandleFunc("/store", commentController.Store).Methods("POST")
 	router.HandleFunc("/paginate", commentController.Index)
