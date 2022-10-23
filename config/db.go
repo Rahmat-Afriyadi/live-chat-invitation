@@ -8,7 +8,7 @@ import (
 	"strconv"
 
 	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -29,11 +29,16 @@ func SetupDatabaseConnection() *gorm.DB {
 	// dbPort := "3306"
 	// dbName := "live_chat"
 	// dbUser := "root"
+	
+	// dbHost := "ec2-52-70-45-163.compute-1.amazonaws.com"
+	// dbPort := "5432"
+	// dbName := "d91ol4pq5t7qn8"
+	// dbUser := "kqmzpbrcyplosj"
 
 	fmt.Println(dbHost)
 
 	dsn := fmt.Sprintf("%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8&loc=Local", dbUser, dbHost, dbPort, dbName)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to create a connection to database")
 	}
