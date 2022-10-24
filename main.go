@@ -55,7 +55,7 @@ func main() {
 	router.HandleFunc("/status", commentController.Status)
 
 	c := cors.New(cors.Options{
-        AllowedOrigins: []string{"http://localhost:3000"},
+        AllowedOrigins: []string{"https://syafiq-ina.vercel.app"},
         AllowCredentials: true,
     })
 

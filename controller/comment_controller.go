@@ -42,6 +42,7 @@ func (c *CommentController) Store(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *CommentController) Index(w http.ResponseWriter, r *http.Request) {
+
 	result := c.CommentService.All(r)
 	helper.RespondWithJSON(w, http.StatusAccepted, result)
 	return
