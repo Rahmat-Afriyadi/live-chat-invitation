@@ -105,7 +105,7 @@ func main() {
 
 	router.PathPrefix("/assets").Handler(http.FileServer(http.Dir("./assets/")))
 	router.HandleFunc("/", func (w http.ResponseWriter, r *http.Request)  {
-		helper.RespondWithJSON(w, http.StatusAccepted, "Hello World")
+		helper.RespondWithJSON(w, http.StatusAccepted, os.Getenv("PORT"))
 	})
 	router.HandleFunc("/socket", WsEndpoint)
 	router.HandleFunc("/store", commentController.Store).Methods("POST")
@@ -116,10 +116,9 @@ func main() {
         AllowCredentials: true,
     })
 
-	port := os.Getenv("PORT")
 
 	handler := c.Handler(router)
 
-	log.Fatal(http.ListenAndServe( port , handler))
+	log.Fatal(http.ListenAndServe( ":"+os.Getenv("PORT") , handler))
 
 }
